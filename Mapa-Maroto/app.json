@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "react-native-classes",
-    "slug": "react-native-classes",
+    "name": "mapa-maroto",
+    "slug": "mapa-maroto",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.jpeg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "packagerOpts": {

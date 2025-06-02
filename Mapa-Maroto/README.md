@@ -1,5 +1,5 @@
-# react-native-classes
-Repository to storage the code in React Native built in the classroom
+# mapa-maroto
+
 
 ## Comandos iniciais:
 	npx create-expo-app PROJETO --template blank 
