@@ -30,19 +30,15 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     if (!email.includes('@') || senha.length < 6) {
       Alert.alert('Feitiço inválido');
-      console.log("passou aqui")
       return;
     }
     if (email == "" || senha.length == 0) {
       Alert.alert('Não acha que esta faltando alguma coisa?');
-      console.log("passou aqui2")
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, senha);
       navigation.replace('Menu');
-      console.log("Email:", email);
-      console.log("Senha:", senha);
     } catch (error) {
       Alert.alert('Erro ao lançar feitiço', error.message);
     }
@@ -74,9 +70,24 @@ export default function Login({ navigation }) {
             <Text style={styles.textoH1}>Estamos orgulhosos de apresentar</Text>
           </View>
           <Text style={styles.textoH2}>Coruja de contato:</Text>
-          <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholderTextColor="#ccc" placeholder="seu@email.com" />
+          <TextInput 
+            style={styles.input} 
+            value={email} 
+            onChangeText={setEmail} 
+            placeholderTextColor="#ccc" 
+            placeholder="seu@email.com" 
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
           <Text style={styles.textoH2}>Juramento solene:</Text>
-          <TextInput style={styles.input} value={senha} onChangeText={setSenha} secureTextEntry placeholder="senha mágica" placeholderTextColor="#ccc" />
+          <TextInput 
+            style={styles.input} 
+            value={senha} 
+            onChangeText={setSenha} 
+            secureTextEntry 
+            placeholder="senha mágica" 
+            placeholderTextColor="#ccc" 
+          />
           <TouchableOpacity style={styles.botao} onPress={handleLogin}>
             <Text style={styles.textoBotao}>Juro solenemente não fazer nada de bom</Text>
           </TouchableOpacity>
@@ -104,6 +115,8 @@ export default function Login({ navigation }) {
               placeholderTextColor="#ccc"
               value={newEmail}
               onChangeText={setNewEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
             />
             <TextInput
               style={styles.input}

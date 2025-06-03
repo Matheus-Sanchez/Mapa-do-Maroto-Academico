@@ -4,9 +4,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../FirebaseConfig';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import { useTheme } from '../context/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function HomeScreen({navigation}) {
+  const { theme } = useTheme();
   const [materias, setMaterias] = useState([]);
   const [materiasHoje, setMateriasHoje] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -60,91 +62,71 @@ export default function HomeScreen({navigation}) {
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.nome}>{item.materia}</Text>
-      <Text style={styles.horario}>Sala: {item.salaNumero}{item.salaLetra}</Text>
-      <Text style={styles.academico}>Acadêmico: {acharAcademico(item.salaNumero)}</Text>
+    <View style={[styles.item, { 
+      backgroundColor: theme.card, 
+      borderColor: theme.cardBorder 
+    }]}>
+      <Text style={[styles.nome, { color: theme.text }]}>{item.materia}</Text>
+      <Text style={[styles.horario, { color: theme.text }]}>Sala: {item.salaNumero}{item.salaLetra}</Text>
+      <Text style={[styles.academico, { color: theme.textSecondary }]}>Acadêmico: {acharAcademico(item.salaNumero)}</Text>
     </View>
   );
 
-
-
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setUserId(user.uid);
-        fetchMaterias(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
-
-  // const fetchMaterias = async (uid) => {
-  //   try {
-  //     const ref = collection(db, 'usuarios', uid, 'materias');
-  //     const snapshot = await getDocs(ref);
-  //     const lista = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     setMaterias(lista);
-  //   } catch (error) {
-  //     console.log('Erro ao buscar matérias:', error);
-  //   }
-  // };
-
-  // const acharAcademico = (numero) => {
-  //   return numero < 400 ? 1 : 2;
-  // };
-
-  //   const renderItem = ({ item }) => (
-  //   <View style={styles.item}>
-  //     <Text style={styles.nome}>{item.materia}</Text>
-  //     <Text style={styles.horario}>Sala: {item.salaNumero}{item.salaLetra}</Text>
-  //     <Text style={styles.academico}>Acadêmico: {acharAcademico(item.salaNumero)}</Text>
-  //   </View>
-  // );
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Minhas Matérias</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Botão de troca de tema */}
+      <View style={styles.themeToggleContainer}>
+        <ThemeToggle />
+      </View>
+      
+      <Text style={[styles.titulo, { color: theme.primary }]}>Minhas Matérias</Text>
       
       {/* Aviso de aulas do dia */}
-      <View style={styles.avisoContainer}>
-        <Text style={styles.diaAtual}>Hoje é {diaAtual}</Text>
+      <View style={[styles.avisoContainer, { 
+        backgroundColor: theme.card,
+        borderColor: theme.cardBorder
+      }]}>
+        <Text style={[styles.diaAtual, { color: theme.primary }]}>Hoje é {diaAtual}</Text>
         {materiasHoje.length > 0 ? (
           <>
-            <Text style={styles.avisoTitulo}>Aulas de hoje:</Text>
+            <Text style={[styles.avisoTitulo, { color: theme.text }]}>Aulas de hoje:</Text>
             {materiasHoje.map(materia => (
-              <View key={materia.id} style={styles.avisoItem}>
-                <Icon name="book" size={20} color="#5C1B0F" />
-                <Text style={styles.avisoTexto}>
+              <View key={materia.id} style={[styles.avisoItem, { 
+                borderBottomColor: theme.cardBorder 
+              }]}>
+                <Icon name="book" size={20} color={theme.icon} />
+                <Text style={[styles.avisoTexto, { color: theme.text }]}>
                   {materia.materia} - Sala {materia.salaLetra}{materia.salaNumero}
                 </Text>
               </View>
             ))}
           </>
         ) : (
-          <Text style={styles.semAulas}>Você não tem aulas hoje!</Text>
+          <Text style={[styles.semAulas, { color: theme.textSecondary }]}>Você não tem aulas hoje!</Text>
         )}
       </View>
 
       <TouchableOpacity
         onPress={() => userId && fetchMaterias(userId)}
-        style={styles.refreshButton}
-      >
-        <Icon name="refresh" size={28} color="#5C1B0F" />
+        style={[styles.refreshButton, { backgroundColor: theme.card }]}>
+        <Icon name="refresh" size={28} color={theme.icon} />
       </TouchableOpacity>
+      
       <FlatList
         data={materias}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.lista}
       />
+      
       <View style={styles.button}>
-        <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Materias')}>
-          <Text style={styles.textoBotao}>Matérias</Text>
+        <TouchableOpacity 
+          style={[styles.botao, { 
+            backgroundColor: theme.primary,
+            borderColor: theme.secondary 
+          }]} 
+          onPress={() => navigation.navigate('Materias')}>
+          <Text style={[styles.textoBotao, { color: theme.headerText }]}>Matérias</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -154,22 +136,24 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5ECD7',
     paddingTop: 50,
     paddingHorizontal: 20,
+  },
+  themeToggleContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 20,
+    zIndex: 10,
   },
   titulo: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#5C1B0F',
     marginBottom: 20,
     textAlign: 'center',
     fontFamily: 'serif',
   },
   avisoContainer: {
-    backgroundColor: '#FFF8DC',
     borderWidth: 1,
-    borderColor: '#D4AF37',
     borderRadius: 12,
     padding: 15,
     marginBottom: 20,
@@ -182,7 +166,6 @@ const styles = StyleSheet.create({
   diaAtual: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#5C1B0F',
     textAlign: 'center',
     marginBottom: 8,
     fontFamily: 'serif',
@@ -190,7 +173,6 @@ const styles = StyleSheet.create({
   avisoTitulo: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
     marginBottom: 5,
     fontFamily: 'serif',
   },
@@ -199,19 +181,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 5,
     borderBottomWidth: 1,
-    borderBottomColor: '#E6D9B8',
   },
   avisoTexto: {
     marginLeft: 10,
     fontSize: 16,
-    color: '#333',
     fontFamily: 'serif',
   },
   semAulas: {
     textAlign: 'center',
     fontSize: 16,
     fontStyle: 'italic',
-    color: '#666',
     marginTop: 5,
     fontFamily: 'serif',
   },
@@ -219,9 +198,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   item: {
-    backgroundColor: '#FFF8DC',
     borderWidth: 1,
-    borderColor: '#D4AF37',
     padding: 16,
     marginBottom: 12,
     borderRadius: 12,
@@ -234,18 +211,15 @@ const styles = StyleSheet.create({
   nome: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1B1B2F',
     marginBottom: 6,
     fontFamily: 'serif',
   },
   horario: {
     fontSize: 16,
-    color: '#333',
     fontFamily: 'serif',
   },
   academico: {
     fontSize: 16,
-    color: '#555',
     marginTop: 4,
     fontStyle: 'italic',
   },
@@ -254,12 +228,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   botao: {
-    backgroundColor: '#5C1B0F',
     padding: 14,
     borderRadius: 10,
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#D4AF37',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
@@ -267,7 +239,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   textoBotao: {
-    color: '#F5ECD7',
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'serif',
@@ -275,10 +246,8 @@ const styles = StyleSheet.create({
   refreshButton: {
     alignSelf: 'flex-end',
     marginBottom: 10,
-    backgroundColor: '#FFF8DC',
     borderRadius: 20,
     padding: 6,
     elevation: 2,
   },
-  
 });

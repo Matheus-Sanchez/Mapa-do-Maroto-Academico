@@ -28,4 +28,4 @@ if (Platform.OS === 'web') {
 
 const db = getFirestore(app);
 
-export { app, db, auth };
+export { app, db, auth };

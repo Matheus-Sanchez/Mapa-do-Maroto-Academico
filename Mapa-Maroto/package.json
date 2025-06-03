@@ -1,3 +1,4 @@
+
 {
   "name": "mapa-maroto",
   "version": "1.0.0",
@@ -30,5 +31,5 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private":true
 }
