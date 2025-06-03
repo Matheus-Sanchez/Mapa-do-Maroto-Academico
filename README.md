@@ -53,46 +53,46 @@ Instalar Dependências
 	npx expo start -c
 
 
-📄 Estrutura de Diretórios
-'
-	MAPA-MAROTO/
-	├── assets/                         # Recursos estáticos como imagens e ícones.
-	│
-	├── components/                     # Componentes reutilizáveis da interface.
-	│   ├── Footer.js                   # Rodapé da aplicação.
-	│   ├── Header.js                   # Cabeçalho da aplicação.
-	│   ├── LogOut.js                   # Botão/componente de logout.
-	│   ├── styles.js                   # Estilos compartilhados.
-	│   └── ThemeToggle.js              # Alternância entre temas claro/escuro.
-	│
-	├── context/                        # Gerenciamento de estado global com React Context.
-	│   ├── auth/                       # Contexto de autenticação.
-	│   │   ├── AuthContext.js          # Define o contexto de autenticação.
-	│   │   ├── AuthProvider.js         # Provedor do contexto.
-	│   │   └── useAuth.js              # Hook personalizado para acesso ao auth.
-	│   └── ThemeContext.js             # Contexto para alternar o tema da aplicação.
-	│
-	├── navigation/                     # Navegação entre telas.
-	│   ├── BottomTabs_Mapa.js         # Navegação por abas inferiores.
-	│   └── Drawer_Sobre.js            # Navegação do tipo gaveta (menu lateral).
-	│
-	├── screens/                        # Telas principais do app.
-	│   ├── Login.js                   # Tela de login do usuário.
-	│   ├── Mapa1.js                   # Primeira tela do mapa.
-	│   ├── Mapa2.js                   # Segunda tela do mapa.
-	│   ├── MateriasScreen.js          # Tela com as matérias/disciplina.
-	│   └── TelaInicial.js             # Tela inicial/boas-vindas.
-	│
-	├── App.js                          # Componente raiz da aplicação.
-	├── app.json                        # Configuração do projeto Expo.
-	├── FirebaseConfig.js               # Integração com Firebase.
-	├── index.js                        # Ponto de entrada da aplicação.
-	├──	metro.config.js                 # Configuração do bundler Metro.
-	├── package-lock.json               # Lockfile do npm.
-	├── package.json                    # Dependências e scripts do projeto.
-	├── README.md                       # Documentação principal.
-	└── style.js                        # Estilos globais.
-'
+### 📁 Estrutura de Diretórios
+
+```plaintext
+MAPA-MAROTO/
+├── assets/                         # Recursos estáticos como imagens e ícones.
+│
+├── components/                     # Componentes reutilizáveis da interface.
+│   ├── Footer.js                   # Rodapé da aplicação.
+│   ├── Header.js                   # Cabeçalho da aplicação.
+│   ├── LogOut.js                   # Botão/componente de logout.
+│   ├── styles.js                   # Estilos compartilhados.
+│   └── ThemeToggle.js              # Alternância entre temas claro/escuro.
+│
+├── context/                        # Gerenciamento de estado global com React Context.
+│   ├── auth/                       # Contexto de autenticação.
+│   │   ├── AuthContext.js          # Define o contexto de autenticação.
+│   │   ├── AuthProvider.js         # Provedor do contexto.
+│   │   └── useAuth.js              # Hook personalizado para acesso ao auth.
+│   └── ThemeContext.js             # Contexto para alternar o tema da aplicação.
+│
+├── navigation/                     # Navegação entre telas.
+│   ├── BottomTabs_Mapa.js         # Navegação por abas inferiores.
+│   └── Drawer_Sobre.js            # Navegação do tipo gaveta (menu lateral).
+│
+├── screens/                        # Telas principais do app.
+│   ├── Login.js                   # Tela de login do usuário.
+│   ├── Mapa1.js                   # Primeira tela do mapa.
+│   ├── Mapa2.js                   # Segunda tela do mapa.
+│   ├── MateriasScreen.js          # Tela com as matérias/disciplina.
+│   └── TelaInicial.js             # Tela inicial/boas-vindas.
+│
+├── App.js                          # Componente raiz da aplicação.
+├── app.json                        # Configuração do projeto Expo.
+├── FirebaseConfig.js               # Integração com Firebase.
+├── index.js                        # Ponto de entrada da aplicação.
+├── metro.config.js                 # Configuração do bundler Metro.
+├── package-lock.json               # Lockfile do npm.
+├── package.json                    # Dependências e scripts do projeto.
+├── README.md                       # Documentação principal.
+└── style.js                        # Estilos globais.
 
 
 assets/: Contém imagens e outros recursos estáticos.
