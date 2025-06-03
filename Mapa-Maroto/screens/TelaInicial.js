@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../FirebaseConfig';
@@ -8,9 +8,20 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function HomeScreen({navigation}) {
   const [materias, setMaterias] = useState([]);
+  const [materiasHoje, setMateriasHoje] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [diaAtual, setDiaAtual] = useState('');
 
   useEffect(() => {
+    // Obter o dia da semana atual
+    const obterDiaSemana = () => {
+      const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+      const hoje = new Date().getDay();
+      return dias[hoje];
+    };
+    
+    setDiaAtual(obterDiaSemana());
+    
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
         setUserId(user.uid);
@@ -19,6 +30,16 @@ export default function HomeScreen({navigation}) {
     });
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    // Filtra as matérias do dia atual quando a lista de matérias for carregada
+    if (materias.length > 0) {
+      const aulasDeHoje = materias.filter(
+        materia => materia.dia && materia.dia.toLowerCase() === diaAtual.toLowerCase()
+      );
+      setMateriasHoje(aulasDeHoje);
+    }
+  }, [materias, diaAtual]);
 
   const fetchMaterias = async (uid) => {
     try {
@@ -46,9 +67,69 @@ export default function HomeScreen({navigation}) {
     </View>
   );
 
+
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+        fetchMaterias(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  // const fetchMaterias = async (uid) => {
+  //   try {
+  //     const ref = collection(db, 'usuarios', uid, 'materias');
+  //     const snapshot = await getDocs(ref);
+  //     const lista = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setMaterias(lista);
+  //   } catch (error) {
+  //     console.log('Erro ao buscar matérias:', error);
+  //   }
+  // };
+
+  // const acharAcademico = (numero) => {
+  //   return numero < 400 ? 1 : 2;
+  // };
+
+  //   const renderItem = ({ item }) => (
+  //   <View style={styles.item}>
+  //     <Text style={styles.nome}>{item.materia}</Text>
+  //     <Text style={styles.horario}>Sala: {item.salaNumero}{item.salaLetra}</Text>
+  //     <Text style={styles.academico}>Acadêmico: {acharAcademico(item.salaNumero)}</Text>
+  //   </View>
+  // );
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Minhas Matérias</Text>
+      
+      {/* Aviso de aulas do dia */}
+      <View style={styles.avisoContainer}>
+        <Text style={styles.diaAtual}>Hoje é {diaAtual}</Text>
+        {materiasHoje.length > 0 ? (
+          <>
+            <Text style={styles.avisoTitulo}>Aulas de hoje:</Text>
+            {materiasHoje.map(materia => (
+              <View key={materia.id} style={styles.avisoItem}>
+                <Icon name="book" size={20} color="#5C1B0F" />
+                <Text style={styles.avisoTexto}>
+                  {materia.materia} - Sala {materia.salaLetra}{materia.salaNumero}
+                </Text>
+              </View>
+            ))}
+          </>
+        ) : (
+          <Text style={styles.semAulas}>Você não tem aulas hoje!</Text>
+        )}
+      </View>
+
       <TouchableOpacity
         onPress={() => userId && fetchMaterias(userId)}
         style={styles.refreshButton}
@@ -83,6 +164,55 @@ const styles = StyleSheet.create({
     color: '#5C1B0F',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily: 'serif',
+  },
+  avisoContainer: {
+    backgroundColor: '#FFF8DC',
+    borderWidth: 1,
+    borderColor: '#D4AF37',
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 4,
+  },
+  diaAtual: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#5C1B0F',
+    textAlign: 'center',
+    marginBottom: 8,
+    fontFamily: 'serif',
+  },
+  avisoTitulo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+    fontFamily: 'serif',
+  },
+  avisoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E6D9B8',
+  },
+  avisoTexto: {
+    marginLeft: 10,
+    fontSize: 16,
+    color: '#333',
+    fontFamily: 'serif',
+  },
+  semAulas: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: '#666',
+    marginTop: 5,
     fontFamily: 'serif',
   },
   lista: {

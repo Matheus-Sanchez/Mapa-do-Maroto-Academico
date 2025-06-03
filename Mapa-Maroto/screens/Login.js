@@ -30,15 +30,19 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     if (!email.includes('@') || senha.length < 6) {
       Alert.alert('Feitiço inválido');
+      console.log("passou aqui")
       return;
     }
-    if (!email == "" || senha.length == 0) {
+    if (email == "" || senha.length == 0) {
       Alert.alert('Não acha que esta faltando alguma coisa?');
+      console.log("passou aqui2")
       return;
     }
     try {
       await signInWithEmailAndPassword(auth, email, senha);
       navigation.replace('Menu');
+      console.log("Email:", email);
+      console.log("Senha:", senha);
     } catch (error) {
       Alert.alert('Erro ao lançar feitiço', error.message);
     }
