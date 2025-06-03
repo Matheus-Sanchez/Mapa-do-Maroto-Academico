@@ -55,37 +55,42 @@ Instalar Dependências
 
 📄 Estrutura de Diretórios
 MAPA-MAROTO/
-├── assets/                          # Recursos estáticos como imagens e ícones.
-├── components/                      # Componentes reutilizáveis da interface.
-│   ├── Footer.js                    # Componente de rodapé da aplicação.
-│   ├── Header.js                    # Componente de cabeçalho da aplicação.
-│   ├── LogOut.js                    # Componente para funcionalidade de logout.
-│   ├── styles.js                    # Estilos compartilhados entre componentes.
-│   └── ThemeToggle.js               # Componente para alternar entre temas claro e escuro.
-├── context/                         # Contextos React para gerenciamento de estado global.
-│   ├── auth/                        # Contexto de autenticação.
-│   │   ├── AuthContext.js           # Define o contexto de autenticação.
-│   │   ├── AuthProvider.js          # Provedor do contexto de autenticação.
-│   │   └── useAuth.js               # Hook personalizado para acessar o contexto de autenticação.
-│   └── ThemeContext.js              # Contexto para gerenciamento de temas.
-├── navigation/                      # Configurações de navegação da aplicação.
-│   ├── BottomTabs_Mapa.js           # Navegação por abas na parte inferior da tela.
-│   └── Drawer_Sobre.js              # Navegação tipo gaveta para a seção "Sobre".
-├── screens/                         # Telas principais da aplicação.
-│   ├── Login.js                     # Tela de login do usuário.
-│   ├── Mapa1.js                     # Primeira tela de mapa.
-│   ├── Mapa2.js                     # Segunda tela de mapa.
-│   ├── MateriasScreen.js            # Tela que exibe as matérias ou disciplinas.
-│   └── TelaInicial.js               # Tela inicial ou de boas-vindas da aplicação.
-├── App.js                           # Componente principal que inicia a aplicação.
-├── app.json                         # Configurações do projeto Expo.
-├── FirebaseConfig.js                # Configurações de integração com o Firebase.
-├── index.js                         # Ponto de entrada da aplicação.
-├── metro.config.js                  # Configurações do bundler Metro para React Native.
-├── package-lock.json                # Arquivo de bloqueio de dependências do npm.
-├── package.json                     # Arquivo de gerenciamento de dependências e scripts.
-├── README.md                        # Documentação do projeto.
-└── style.js                         # Estilos globais da aplicação.
+├── assets/                         # Recursos estáticos como imagens e ícones.
+│
+├── components/                     # Componentes reutilizáveis da interface.
+│   ├── Footer.js                   # Componente de rodapé da aplicação.
+│   ├── Header.js                   # Componente de cabeçalho da aplicação.
+│   ├── LogOut.js                   # Componente para funcionalidade de logout.
+│   ├── styles.js                   # Estilos compartilhados entre componentes.
+│   └── ThemeToggle.js              # Componente para alternar entre temas claro e escuro.
+│
+├── context/                        # Contextos React para gerenciamento de estado global.
+│   ├── auth/                       # Contexto de autenticação.
+│   │   ├── AuthContext.js          # Define o contexto de autenticação.
+│   │   ├── AuthProvider.js         # Provedor do contexto de autenticação.
+│   │   └── useAuth.js              # Hook personalizado para acessar o contexto de autenticação.
+│   └── ThemeContext.js             # Contexto para gerenciamento de temas.
+│
+├── navigation/                     # Configurações de navegação da aplicação.
+│   ├── BottomTabs_Mapa.js         # Navegação por abas na parte inferior da tela.
+│   └── Drawer_Sobre.js            # Navegação tipo gaveta para a seção "Sobre".
+│
+├── screens/                        # Telas principais da aplicação.
+│   ├── Login.js                   # Tela de login do usuário.
+│   ├── Mapa1.js                   # Primeira tela de mapa.
+│   ├── Mapa2.js                   # Segunda tela de mapa.
+│   ├── MateriasScreen.js          # Tela que exibe as matérias ou disciplinas.
+│   └── TelaInicial.js             # Tela inicial ou de boas-vindas da aplicação.
+│
+├── App.js                          # Componente principal que inicia a aplicação.
+├── app.json                        # Configurações do projeto Expo.
+├── FirebaseConfig.js               # Configurações de integração com o Firebase.
+├── index.js                        # Ponto de entrada da aplicação.
+├── metro.config.js                 # Configurações do bundler Metro para React Native.
+├── package-lock.json               # Arquivo de bloqueio de dependências do npm.
+├── package.json                    # Arquivo de gerenciamento de dependências e scripts.
+├── README.md                       # Documentação do projeto.
+└── style.js                        # Estilos globais da aplicação.
 
 
 assets/: Contém imagens e outros recursos estáticos.
