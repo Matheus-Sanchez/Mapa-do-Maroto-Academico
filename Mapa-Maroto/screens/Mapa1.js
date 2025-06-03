@@ -22,7 +22,7 @@ export default function Mapa1() {
         showsVerticalScrollIndicator={false}
       >
         <Image
-          source={require('../assets/planta-baixa1.jpg')}
+          source={require('../assets/academico1.jpeg')}
           style={styles.image}
         />
       </ScrollView>
