@@ -123,8 +123,8 @@ Abra um Pull Request.
 📬 Contato
 Para dúvidas ou sugestões, entre em contato com o autor:
 
-Nome: Matheus Sanchez Duda
+Nome: Matheus Sanchez Duda e 
 	  Giovanna Paiva Alves
 
-Email: matheus.sduda@senacsp.edu.br
+Email: matheus.sduda@senacsp.edu.br, 
 	   giovanna.palves@senacsp.edu.br
