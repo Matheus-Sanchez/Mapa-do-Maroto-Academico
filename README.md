@@ -93,6 +93,7 @@ MAPA-MAROTO/
 └── style.js                        # Estilos globais da aplicação.
 
 
+
 assets/: Contém imagens e outros recursos estáticos.
 
 components/: Componentes reutilizáveis da interface.
