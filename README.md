@@ -54,6 +54,7 @@ Instalar Dependências
 
 
 📄 Estrutura de Diretórios
+'
 MAPA-MAROTO/
 ├── assets/                         # Recursos estáticos como imagens e ícones.
 │
@@ -91,7 +92,7 @@ MAPA-MAROTO/
 ├── package.json                    # Dependências e scripts do projeto.
 ├── README.md                       # Documentação principal.
 └── style.js                        # Estilos globais.
-
+'
 
 
 assets/: Contém imagens e outros recursos estáticos.
