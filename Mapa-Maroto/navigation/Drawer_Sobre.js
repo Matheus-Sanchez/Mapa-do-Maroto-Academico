@@ -11,9 +11,9 @@ export default function DrawerNavigator() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Inicio" component={TelaInicial} />
-      <Drawer.Screen name="Materias" component={MateriasScreen} />
+      <Drawer.Screen name="Matérias" component={MateriasScreen} />
       <Drawer.Screen name="Mapa" component={BottomTabs_Mapa} />
-      <Drawer.Screen name="Sair" component={LogoutScreen} />
+      <Drawer.Screen name="Malfeito Feito(Sair)" component={LogoutScreen} />
     </Drawer.Navigator>
   );
 }
