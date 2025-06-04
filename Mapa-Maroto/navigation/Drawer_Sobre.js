@@ -13,7 +13,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Inicio" component={TelaInicial} />
       <Drawer.Screen name="Matérias" component={MateriasScreen} />
       <Drawer.Screen name="Mapa" component={BottomTabs_Mapa} />
-      <Drawer.Screen name="Malfeito Feito(Sair)" component={LogoutScreen} />
+      <Drawer.Screen name="Malfeito Feito (Sair)" component={LogoutScreen} />
     </Drawer.Navigator>
   );
 }

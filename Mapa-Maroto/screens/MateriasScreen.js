@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View, Text, FlatList, TextInput, TouchableOpacity,
-  Modal, StyleSheet, Alert
+  Modal, StyleSheet, Alert, KeyboardAvoidingView, Platform, ScrollView
 } from 'react-native';
 import {
   collection, doc, getDocs, addDoc,
@@ -173,6 +173,7 @@ export default function MateriasScreen({navigation}) {
       </TouchableOpacity>
 
 
+      {/* Modal modificado para corrigir problemas em dispositivos móveis */}
       <Modal 
         visible={modalVisible} 
         transparent 
@@ -186,100 +187,119 @@ export default function MateriasScreen({navigation}) {
           setDia('');
         }}
       >
-        <View style={[styles.modalContainer, { backgroundColor: theme.modalBg }]}>
-          <View style={[styles.modalView, { 
-            backgroundColor: theme.card,
-            borderColor: theme.cardBorder
-          }]}>
-            <Text style={[styles.modalTitulo, { color: theme.primary }]}>
-              {editandoId ? 'Editar Matéria' : 'Nova Matéria'}
-            </Text>
-            
-            <Text style={[styles.texto, { color: theme.text }]}>Matéria</Text>
-            <TextInput 
-              style={[styles.input, { 
-                backgroundColor: theme.background,
-                borderColor: theme.cardBorder,
-                color: theme.text 
-              }]} 
-              placeholder="Matemática" 
-              placeholderTextColor={theme.textSecondary}
-              value={materia} 
-              onChangeText={setMateria}
-            />
-            
-            <Text style={[styles.texto, { color: theme.text }]}>Número da Sala</Text>
-            <TextInput 
-              style={[styles.input, { 
-                backgroundColor: theme.background,
-                borderColor: theme.cardBorder,
-                color: theme.text 
-              }]} 
-              placeholder="137" 
-              placeholderTextColor={theme.textSecondary}
-              keyboardType="numeric"
-              value={salaNumero} 
-              onChangeText={setSalaNumero}
-            />
-            
-            <Text style={[styles.texto, { color: theme.text }]}>Letra/Corredor da Sala</Text>
-            <TextInput 
-              style={[styles.input, { 
-                backgroundColor: theme.background,
-                borderColor: theme.cardBorder,
-                color: theme.text 
-              }]} 
-              placeholder="C" 
-              placeholderTextColor={theme.textSecondary}
-              value={salaLetra} 
-              onChangeText={setSalaLetra}
-              maxLength={1}
-            />
-            
-            <Text style={[styles.texto, { color: theme.text }]}>Dia da semana</Text>
-            <TextInput 
-              style={[styles.input, { 
-                backgroundColor: theme.background,
-                borderColor: theme.cardBorder,
-                color: theme.text 
-              }]} 
-              placeholder="Terça" 
-              placeholderTextColor={theme.textSecondary}
-              value={dia} 
-              onChangeText={setDia} 
-            />
-            
-            <View style={styles.modalButtons}>
-              <TouchableOpacity 
-                style={[styles.botao, { 
-                  backgroundColor: theme.primary,
-                  borderColor: theme.secondary 
-                }]} 
-                onPress={salvarMateria}
-              >
-                <Text style={[styles.textoBotao, { color: theme.headerText }]}>
-                  {editandoId ? "Atualizar" : "Salvar"}
-                </Text>
-              </TouchableOpacity>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={[styles.modalContainer, { backgroundColor: theme.modalBg }]}
+        >
+          <ScrollView 
+            contentContainerStyle={styles.scrollViewContent}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={[styles.modalView, { 
+              backgroundColor: theme.card,
+              borderColor: theme.cardBorder
+            }]}>
+              <Text style={[styles.modalTitulo, { color: theme.primary }]}>
+                {editandoId ? 'Editar Matéria' : 'Nova Matéria'}
+              </Text>
               
-              <TouchableOpacity 
-                style={[styles.botaoSecundario, { borderColor: theme.primary }]}
-                onPress={() => {
-                  setModalVisible(false);
-                  setMateria('');
-                  setSalaNumero('');
-                  setSalaLetra('');
-                  setDia('');
-                  setEditandoId(null);
-                }}
-              >
-                <Text style={[styles.textoBotaoSecundario, { color: theme.primary }]}>
-                  Cancelar
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.inputContainer}>
+                <Text style={[styles.texto, { color: theme.text }]}>Matéria</Text>
+                <TextInput 
+                  style={[styles.input, { 
+                    backgroundColor: theme.background,
+                    borderColor: theme.cardBorder,
+                    color: theme.text 
+                  }]} 
+                  placeholder="Matemática" 
+                  placeholderTextColor={theme.textSecondary}
+                  value={materia} 
+                  onChangeText={setMateria}
+                />
+              </View>
+              
+              <View style={styles.inputContainer}>
+                <Text style={[styles.texto, { color: theme.text }]}>Número da Sala</Text>
+                <TextInput 
+                  style={[styles.input, { 
+                    backgroundColor: theme.background,
+                    borderColor: theme.cardBorder,
+                    color: theme.text 
+                  }]} 
+                  placeholder="137" 
+                  placeholderTextColor={theme.textSecondary}
+                  keyboardType="numeric"
+                  value={salaNumero} 
+                  onChangeText={setSalaNumero}
+                />
+              </View>
+              
+              <View style={styles.inputContainer}>
+                <Text style={[styles.texto, { color: theme.text }]}>Letra/Corredor da Sala</Text>
+                <TextInput 
+                  style={[styles.input, { 
+                    backgroundColor: theme.background,
+                    borderColor: theme.cardBorder,
+                    color: theme.text 
+                  }]} 
+                  placeholder="C" 
+                  placeholderTextColor={theme.textSecondary}
+                  value={salaLetra} 
+                  onChangeText={setSalaLetra}
+                  maxLength={1}
+                />
+              </View>
+              
+              <View style={styles.inputContainer}>
+                <Text style={[styles.texto, { color: theme.text }]}>Dia da semana</Text>
+                <TextInput 
+                  style={[styles.input, { 
+                    backgroundColor: theme.background,
+                    borderColor: theme.cardBorder,
+                    color: theme.text 
+                  }]} 
+                  placeholder="Terça" 
+                  placeholderTextColor={theme.textSecondary}
+                  value={dia} 
+                  onChangeText={setDia} 
+                />
+              </View>
+              
+              <View style={styles.modalButtons}>
+                <TouchableOpacity 
+                  style={[styles.botaoModal, { 
+                    backgroundColor: theme.primary,
+                    borderColor: theme.secondary 
+                  }]} 
+                  onPress={salvarMateria}
+                >
+                  <Text style={[styles.textoBotao, { color: theme.headerText }]}>
+                    {editandoId ? "Atualizar" : "Salvar"}
+                  </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity 
+                  style={[styles.botaoSecundarioModal, { 
+                    backgroundColor: '#A9A9A9',
+                    borderColor: theme.primary 
+                  }]}
+                  onPress={() => {
+                    setModalVisible(false);
+                    setMateria('');
+                    setSalaNumero('');
+                    setSalaLetra('');
+                    setDia('');
+                    setEditandoId(null);
+                  }}
+                >
+                  <Text style={[styles.textoBotaoSecundario, { color: '#FFF' }]}>
+                    Cancelar
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
@@ -325,6 +345,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     fontFamily: 'serif', 
     marginBottom: 5,
+    fontWeight: 'bold',
   },
   actions: {
     flexDirection: 'row',
@@ -351,21 +372,17 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginVertical: 5,
   },
-  textoBotao: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'serif',
-  },
-  textoBotaoSecundario: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'serif',
-  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    width: '100%',
   },
   modalView: {
     borderRadius: 12,
@@ -377,6 +394,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     borderWidth: 1,
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 15,
   },
   modalTitulo: {
     fontSize: 22,
@@ -390,13 +411,29 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 20,
   },
+  botaoModal: {
+    padding: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 2,
+    flex: 1,
+    marginRight: 10,
+  },
+  botaoSecundarioModal: {
+    padding: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 2,
+    flex: 1,
+    marginLeft: 10,
+  },
   input: {
     borderWidth: 1,
     padding: 12,
-    marginBottom: 15,
     borderRadius: 8,
     width: '100%',
     fontFamily: 'serif',
+    fontSize: 16,
   },
   iconButton: {
     marginHorizontal: 5,

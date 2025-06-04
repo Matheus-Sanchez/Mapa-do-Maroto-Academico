@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, TextInput, StyleSheet, Alert, ImageBackground,
-  TouchableOpacity, Modal, Pressable
+  TouchableOpacity, Modal, Pressable, KeyboardAvoidingView, Platform, ScrollView
 } from 'react-native';
 
 import { auth } from '../FirebaseConfig';
@@ -59,85 +59,97 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <ImageBackground
         source={require('../assets/backlogin.png')}
         style={styles.background}
         resizeMode="cover"
       >
-        <View style={styles.container2}>
-          <View style={styles.container3}>
-            <Text style={styles.textoH1}>Estamos orgulhosos de apresentar</Text>
-          </View>
-          <Text style={styles.textoH2}>Coruja de contato:</Text>
-          <TextInput 
-            style={styles.input} 
-            value={email} 
-            onChangeText={setEmail} 
-            placeholderTextColor="#ccc" 
-            placeholder="seu@email.com" 
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <Text style={styles.textoH2}>Juramento solene:</Text>
-          <TextInput 
-            style={styles.input} 
-            value={senha} 
-            onChangeText={setSenha} 
-            secureTextEntry 
-            placeholder="senha mágica" 
-            placeholderTextColor="#ccc" 
-          />
-          <TouchableOpacity style={styles.botao} onPress={handleLogin}>
-            <Text style={styles.textoBotao}>Juro solenemente não fazer nada de bom</Text>
-          </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.container2}>
+            <View style={styles.container3}>
+              <Text style={styles.textoH1}>Estamos orgulhosos de apresentar</Text>
+            </View>
+            
+            <Text style={styles.textoH2}>Coruja de contato:</Text>
+            <TextInput 
+              style={styles.input} 
+              value={email} 
+              onChangeText={setEmail} 
+              placeholderTextColor="#ccc" 
+              placeholder="seu@email.com" 
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            
+            <Text style={styles.textoH2}>Juramento solene:</Text>
+            <TextInput 
+              style={styles.input} 
+              value={senha} 
+              onChangeText={setSenha} 
+              secureTextEntry 
+              placeholder="senha mágica" 
+              placeholderTextColor="#ccc" 
+            />
+            
+            <TouchableOpacity style={styles.botao} onPress={handleLogin}>
+              <Text style={styles.textoBotao}>Juro solenemente não fazer nada de bom</Text>
+            </TouchableOpacity>
 
-          <Text style={styles.textoBotao}>
-            Inscreva-se para receber sua carta de admissão! 
-            <Text style={styles.link} onPress={() => setModalVisible(true)}> clique aqui</Text>
-          </Text>
-        </View>
+            <Text style={styles.textoBotao}>
+              Inscreva-se para receber sua carta de admissão! 
+              <Text style={styles.link} onPress={() => setModalVisible(true)}> clique aqui</Text>
+            </Text>
+          </View>
+        </ScrollView>
       </ImageBackground>
 
-      
       <Modal
         animationType="slide"
         transparent
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalTitulo}>Carta de admissão</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Nova coruja de contato"
-              placeholderTextColor="#ccc"
-              value={newEmail}
-              onChangeText={setNewEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Novo juramento solene"
-              placeholderTextColor="#ccc"
-              value={newSenha}
-              onChangeText={setNewSenha}
-              secureTextEntry
-            />
-            <View style={styles.modalButtons}>
-              <Pressable style={styles.botao} onPress={handleCreateAccount}>
-                <Text style={styles.textoBotao}>Concluir Cadastro</Text>
-              </Pressable>
-              <Pressable onPress={() => setModalVisible(false)}>
-                <Text style={styles.link}>Cancelar</Text>
-              </Pressable>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.modalContainer}
+        >
+          <ScrollView contentContainerStyle={styles.modalScrollContent}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalTitulo}>Carta de admissão</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Nova coruja de contato"
+                placeholderTextColor="#ccc"
+                value={newEmail}
+                onChangeText={setNewEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Novo juramento solene"
+                placeholderTextColor="#ccc"
+                value={newSenha}
+                onChangeText={setNewSenha}
+                secureTextEntry
+              />
+              <View style={styles.modalButtons}>
+                <Pressable style={styles.botao} onPress={handleCreateAccount}>
+                  <Text style={styles.textoBotao}>Concluir Cadastro</Text>
+                </Pressable>
+                <Pressable onPress={() => setModalVisible(false)}>
+                  <Text style={styles.link}>Cancelar</Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </Modal>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -146,23 +158,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#D3A865",
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   background: {
     flex: 1,
-    justifyContent: 'center',
-    alignSelf: 'center',
     width: '100%',
     height: '100%',
   },
   container2: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     padding: 20,
+    paddingBottom: 40, // Adiciona espaço extra na parte inferior
   },
   container3: {
     alignItems: 'center',
-    marginBottom: '50%',
+    marginBottom: '20%', // Reduzido de 50% para 20%
   },
   textoH1: {
     color: '#f0e6d2',
@@ -204,8 +218,12 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.75)',
+  },
+  modalScrollContent: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 40,
   },
   modalView: {
     backgroundColor: '#1a1a1a',
